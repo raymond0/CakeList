@@ -33,11 +33,13 @@ class CakeApi: NSObject {
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
+                print("URL session error: \(String(describing: error))")
                 completion(nil, error)
                 return
             }
             
             guard let responseData = data else {
+                print("URL response data was nil")
                 completion(nil, NSError(domain: "Cake", code: 1, userInfo:nil))
                 return
             }

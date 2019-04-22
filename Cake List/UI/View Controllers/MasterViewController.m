@@ -19,7 +19,9 @@
 @property (strong, nonatomic) NSArray<Cake *> *cakeList;
 @end
 
-@implementation MasterViewController
+@implementation MasterViewController{
+    BOOL _loadingData;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,9 +55,22 @@
 }
 
 
+- (IBAction)refreshControlTriggered:(UIRefreshControl *)sender {
+    [self getData];
+}
+
+
 - (void)getData{
+    if (_loadingData){
+        return;
+    }
+    
+    _loadingData = YES;
     [CakeApi.shared loadCakeDataWithCompletion:^(NSArray<Cake *> * _Nullable cakelist , NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            _loadingData = NO;
+            [self.refreshControl endRefreshing];
+            
             if (error != nil){
                 [self displayError:error];
                 return;
