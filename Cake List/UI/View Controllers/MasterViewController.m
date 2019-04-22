@@ -17,11 +17,10 @@
 
 @interface MasterViewController ()
 @property (strong, nonatomic) NSArray<Cake *> *cakeList;
+@property (assign, nonatomic) BOOL loadingData;
 @end
 
-@implementation MasterViewController{
-    BOOL _loadingData;
-}
+@implementation MasterViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -65,19 +64,21 @@
         return;
     }
     
+    __weak MasterViewController *weakSelf = self;
+    
     _loadingData = YES;
     [CakeApi.shared loadCakeDataWithCompletion:^(NSArray<Cake *> * _Nullable cakelist , NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            _loadingData = NO;
-            [self.refreshControl endRefreshing];
+            self.loadingData = NO;
+            [weakSelf.refreshControl endRefreshing];
             
             if (error != nil){
-                [self displayError:error];
+                [weakSelf displayError:error];
                 return;
             }
             
-            self.cakeList = cakelist;
-            [self.tableView reloadData];
+            weakSelf.cakeList = cakelist;
+            [weakSelf.tableView reloadData];
         });
     }];
 }
