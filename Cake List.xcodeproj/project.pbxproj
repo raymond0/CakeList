@@ -63,6 +63,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7158231D226DC32100A5447F /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				DBF17A411B0B8EED004E6311 /* Cells */,
+				DBF17A401B0B8EE3004E6311 /* View Controllers */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		7158231E226DC34600A5447F /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				71582320226DC76D00A5447F /* API */,
+				7158231F226DC35200A5447F /* Model */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		7158231F226DC35200A5447F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		71582320226DC76D00A5447F /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		DBF17A081B0B648F004E6311 = {
 			isa = PBXGroup;
 			children = (
@@ -84,10 +116,10 @@
 		DBF17A131B0B648F004E6311 /* Cake List */ = {
 			isa = PBXGroup;
 			children = (
+				7158231E226DC34600A5447F /* Data */,
+				7158231D226DC32100A5447F /* UI */,
 				DBF17A181B0B648F004E6311 /* AppDelegate.h */,
 				DBF17A191B0B648F004E6311 /* AppDelegate.m */,
-				DBF17A401B0B8EE3004E6311 /* View Controllers */,
-				DBF17A411B0B8EED004E6311 /* Cells */,
 				DBF17A211B0B648F004E6311 /* Main.storyboard */,
 				DBF17A241B0B648F004E6311 /* Images.xcassets */,
 				DBF17A261B0B648F004E6311 /* LaunchScreen.xib */,
@@ -128,7 +160,7 @@
 				DBF17A1B1B0B648F004E6311 /* MasterViewController.h */,
 				DBF17A1C1B0B648F004E6311 /* MasterViewController.m */,
 			);
-			name = "View Controllers";
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 		DBF17A411B0B8EED004E6311 /* Cells */ = {
@@ -137,7 +169,7 @@
 				DBF17A3D1B0B8E16004E6311 /* CakeCell.h */,
 				DBF17A3E1B0B8E16004E6311 /* CakeCell.m */,
 			);
-			name = Cells;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,6 +233,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
