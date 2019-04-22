@@ -17,6 +17,10 @@ class CakeApi: NSObject {
         super.init()
     }
     
+    //
+    // As soon as specifications indicated there are additional API calls from the same API root
+    // I would move to a Request/Response model with a class unique for each request.
+    //
     let CAKE_RESOURCE_PATH = "https://gist.githubusercontent.com/hart88/198f29ec5114a3ec3460/raw/8dd19a88f9b8d24c23d9960f3300d0c917a4f07c/cake.json"
     
     //
