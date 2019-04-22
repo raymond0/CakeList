@@ -22,7 +22,7 @@ class CakeCell: UITableViewCell {
             
             cakeImageView?.image = nil
             if let cakeImageUrlString = cake?.image,
-                let cakeImageUrl = URL(string: cakeImageUrlString){
+               let cakeImageUrl = URL(string: cakeImageUrlString){
                 cakeImageView?.setUrlImage(url: cakeImageUrl)
             }
         }
