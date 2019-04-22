@@ -55,12 +55,12 @@
 
 - (void)getData{
     [CakeApi.shared loadCakeDataWithCompletion:^(NSArray<Cake *> * _Nullable cakelist , NSError * _Nullable error) {
-        if (error != nil){
-            [self displayError:error];
-            return;
-        }
-        
         dispatch_async(dispatch_get_main_queue(), ^{
+            if (error != nil){
+                [self displayError:error];
+                return;
+            }
+            
             self.cakeList = cakelist;
             [self.tableView reloadData];
         });
