@@ -43,6 +43,9 @@ extension UIImageView {
     private func resizeAndShow(image: UIImage, in targetBounds: CGRect){
         assert(Thread.current != Thread.main)
         
+        //
+        //  Resize: fill maintaining aspect ratio
+        //
         let aspectWidth = targetBounds.size.width / image.size.width
         let aspectHeight = targetBounds.size.height / image.size.height
         let aspectRatio = max( aspectWidth, aspectHeight );
