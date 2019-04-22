@@ -7,10 +7,16 @@
 //
 
 #import "MasterViewController.h"
-#import "CakeCell.h"
+#import <Cake_List-Swift.h>
+
+//
+//  I was advised to complete the project in Swift, but I also said I'd retain objective-c code.
+//  Normally a project of this size I'd recommend conversion to Swift, but as it's a demo project
+//  perhaps the gradual conversion to Swift is more representative of the real world.
+//
 
 @interface MasterViewController ()
-@property (strong, nonatomic) NSArray *objects;
+@property (strong, nonatomic) NSArray<Cake *> *cakeList;
 @end
 
 @implementation MasterViewController
@@ -20,28 +26,23 @@
     [self getData];
 }
 
+
 #pragma mark - Table View
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.objects.count;
+    return _cakeList.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CakeCell *cell = (CakeCell*)[tableView dequeueReusableCellWithIdentifier:@"CakeCell"];
     
-    NSDictionary *object = self.objects[indexPath.row];
-    cell.titleLabel.text = object[@"title"];
-    cell.descriptionLabel.text = object[@"desc"];
- 
-    
-    NSURL *aURL = [NSURL URLWithString:object[@"image"]];
-    NSData *data = [NSData dataWithContentsOfURL:aURL];
-    UIImage *image = [UIImage imageWithData:data];
-    [cell.cakeImageView setImage:image];
+    Cake *cake = _cakeList[indexPath.row];
+    cell.cake = cake;
     
     return cell;
 }
@@ -53,22 +54,28 @@
 
 
 - (void)getData{
-    
-    NSURL *url = [NSURL URLWithString:@"https://gist.githubusercontent.com/hart88/198f29ec5114a3ec3460/raw/8dd19a88f9b8d24c23d9960f3300d0c917a4f07c/cake.json"];
-    
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    
-    NSError *jsonError;
-    id responseData = [NSJSONSerialization
-                       JSONObjectWithData:data
-                       options:kNilOptions
-                       error:&jsonError];
-    if (!jsonError){
-        self.objects = responseData;
-        [self.tableView reloadData];
-    } else {
-    }
-    
+    [CakeApi.shared loadCakeDataWithCompletion:^(NSArray<Cake *> * _Nullable cakelist , NSError * _Nullable error) {
+        if (error != nil){
+            [self displayError:error];
+            return;
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.cakeList = cakelist;
+            [self.tableView reloadData];
+        });
+    }];
+}
+
+
+-(void)displayError:(NSError *)error{
+    UIAlertController * ac = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                 message:error.localizedDescription
+                                                          preferredStyle:UIAlertControllerStyleAlert];
+    [ac addAction:[UIAlertAction actionWithTitle:@"Ok"
+                                           style:(UIAlertActionStyleDefault)
+                                         handler:nil]];
+    [self presentViewController:ac animated:YES completion:nil];
 }
 
 @end
